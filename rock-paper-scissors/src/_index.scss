@@ -1,0 +1,128 @@
+#score {
+  min-height: 10vh;
+  max-width: 70%;
+  padding: 15px;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@media screen and (max-width: 1920px) {
+  #score {
+    max-width: 90%;
+  }
+}
+
+#score-digits {
+  font-size: 24px;
+  margin: auto;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+#player-score,
+#ai-score {
+  padding: 5px;
+}
+
+/* position (+) */
+#player-bar {
+  width: 320px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(to left, salmon 50%, lightgrey 50%);
+  background-size: 200%;
+  background-position: 0%;
+  transition: 0.5s ease;
+  position: relative;
+}
+
+#player-image {
+  width: 96px;
+  position: absolute;
+  top: 15px;
+  left: -10%;
+  z-index: -1;
+}
+
+/* position (-) */
+#ai-bar {
+  width: 320px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(to left, salmon 50%, lightgrey 50%);
+  background-size: 200%;
+  background-position: 0%;
+  transition: 0.5s ease;
+  position: relative;
+}
+
+#ai-image {
+  width: 128px;
+  position: absolute;
+  top: 15px;
+  right: -10%;
+}
+
+#robot-animate-eyes {
+  animation: robot-eyes 0.7s ease;
+}
+
+#robot-animate-chest {
+  animation: robot-chest 0.7s ease;
+}
+
+#field {
+  min-height: 60vh;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#buttons > div {
+  margin: 15px;
+  padding: 5px;
+  width: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: transparent;
+  transition: transform 0.25s ease-out;
+}
+
+#buttons > div:hover {
+  transform: scale(1.5);
+  color: black;
+}
+
+#buttons > div:active {
+  transform: scale(1.25);
+  color: black;
+}
+
+#reset {
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+#reset button {
+  width: 100px;
+  height: 50px;
+  font-size: 24px;
+  background: white;
+  cursor: pointer;
+}

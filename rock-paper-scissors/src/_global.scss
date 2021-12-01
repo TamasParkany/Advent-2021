@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  font-family: "Odibee Sans", cursive;
+}
+
+:root {
+  font-family: "Odibee Sans", cursive;
+  user-select: none;
+}
+
+@keyframes robot-eyes {
+  0% {
+    fill: #18ffff;
+  }
+  30% {
+    fill: red;
+  }
+  60% {
+    fill: #18ffff;
+  }
+  90% {
+    fill: red;
+  }
+}
+
+@keyframes robot-chest {
+  0% {
+    fill: #18ffff;
+  }
+  25% {
+    fill: orange;
+  }
+  50% {
+    fill: #18ffff;
+  }
+  75% {
+    fill: orange;
+  }
+}
