@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <title>Etch A Sketch</title>
+  </head>
+  <body>
+    <script defer src="./src/index.js"></script>
+    <div id="container">
+      <div id="logo">
+        <span><p class="the">The</p></span>
+        <h1 class="etch-a-sketch">Etch A Sketch</h1>
+        <span><p class="animator">Animator</p></span>
+        <span><p class="trademark">&trade;</p></span>
+      </div>
+      <div id="grid-container">
+        <div id="grid"></div>
+      </div>
+      <div id="buttons-container">
+        <div id="left-button"><div class="left-button button"></div></div>
+        <div id="buttons">
+          <input type="color" name="color" id="color-picker" />
+          <button id="toggle-lines" type="button">GRID</button>
+          <button id="reset-grid" type="button">ERASE</button>
+        </div>
+        <div id="right-button"><div class="right-button button"></div></div>
+      </div>
+      <div id="size">
+        <input
+          type="range"
+          name="size"
+          id="grid-size"
+          class="slider"
+          value="64"
+          min="16"
+          max="128"
+        />
+        <p id="grid-size-info">Grid size: 64 x 64</p>
+      </div>
+    </div>
+  </body>
+</html>
