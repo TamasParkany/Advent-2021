@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <title>Calculator</title>
+  </head>
+  <body>
+    <script defer src="./src/index.js"></script>
+    <div id="container">
+      <div id="display">
+        <div id="product"></div>
+      </div>
+      <table id="buttons">
+        <tbody>
+          <tr>
+            <td>
+              <div class="button button-operator">AC</div>
+            </td>
+            <td>
+              <div class="button button-operator">+/-</div>
+            </td>
+            <td>
+              <div class="button button-operator">%</div>
+            </td>
+            <td>
+              <div data-operator="divide" class="button button-operator">/</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div data-operand="7" class="button">7</div>
+            </td>
+            <td>
+              <div data-operand="8" class="button">8</div>
+            </td>
+            <td>
+              <div data-operand="9" class="button">9</div>
+            </td>
+            <td>
+              <div data-operator="multiply" class="button button-operator">
+                x
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div data-operand="4" class="button">4</div>
+            </td>
+            <td>
+              <div data-operand="5" class="button">5</div>
+            </td>
+            <td>
+              <div data-operand="6" class="button">6</div>
+            </td>
+            <td>
+              <div data-operator="subtract" class="button button-operator">
+                -
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div data-operand="1" class="button">1</div>
+            </td>
+            <td>
+              <div data-operand="2" class="button">2</div>
+            </td>
+            <td>
+              <div data-operand="3" class="button">3</div>
+            </td>
+            <td>
+              <div data-operator="add" class="button button-operator">+</div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div data-operand="0" class="button">0</div>
+            </td>
+            <td>
+              <div class="button">.</div>
+            </td>
+            <td>
+              <div class="button button-equals">=</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
