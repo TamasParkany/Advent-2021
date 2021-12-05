@@ -1,0 +1,67 @@
+/* HEADINGS */
+
+h1 {
+  font-weight: 500;
+  font-size: calc(16px + 1vw);
+}
+h2 {
+  font-weight: 500;
+  font-size: calc(14px + 1vw);
+}
+h3 {
+  font-weight: 500;
+  font-size: calc(12px + 1vw);
+}
+h4 {
+  font-weight: 500;
+  font-size: calc(10px + 1vw);
+}
+h5 {
+  font-weight: 500;
+  font-size: calc(8px + 1vw);
+}
+h6 {
+  font-weight: 500;
+  font-size: calc(6px + 1vw);
+}
+
+/* DISPLAY HEADINGS */
+
+.display-1 {
+  font-weight: 300;
+  font-size: calc(16px + 2vw);
+}
+.display-2 {
+  font-weight: 300;
+  font-size: calc(14px + 2vw);
+}
+.display-3 {
+  font-weight: 300;
+  font-size: calc(12px + 2vw);
+}
+.display-4 {
+  font-weight: 300;
+  font-size: calc(10px + 2vw);
+}
+.display-5 {
+  font-weight: 300;
+  font-size: calc(8px + 2vw);
+}
+.display-6 {
+  font-weight: 300;
+  font-size: calc(6px + 2vw);
+}
+
+/* OTHERS */
+
+mark {
+  background-color: lightgoldenrodyellow;
+}
+
+.mark {
+  background-color: lightgoldenrodyellow;
+}
+
+abbr:hover {
+  cursor: help;
+}
