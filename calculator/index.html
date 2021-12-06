@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA="
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./src/style.css" />
     <title>Calculator</title>
   </head>
@@ -17,16 +28,16 @@
         <tbody>
           <tr>
             <td>
-              <div class="button button-operator">AC</div>
+              <div class="reset button button-other">AC</div>
             </td>
             <td>
-              <div class="button button-operator">+/-</div>
+              <div class="polarity button button-other">+/-</div>
             </td>
             <td>
-              <div class="button button-operator">%</div>
+              <div class="percent button button-other">%</div>
             </td>
             <td>
-              <div data-operator="divide" class="button button-operator">/</div>
+              <div data-operator="/" class="button button-operator">/</div>
             </td>
           </tr>
           <tr>
@@ -40,9 +51,7 @@
               <div data-operand="9" class="button">9</div>
             </td>
             <td>
-              <div data-operator="multiply" class="button button-operator">
-                x
-              </div>
+              <div data-operator="x" class="button button-operator">x</div>
             </td>
           </tr>
           <tr>
@@ -56,9 +65,7 @@
               <div data-operand="6" class="button">6</div>
             </td>
             <td>
-              <div data-operator="subtract" class="button button-operator">
-                -
-              </div>
+              <div data-operator="-" class="button button-operator">-</div>
             </td>
           </tr>
           <tr>
@@ -72,15 +79,15 @@
               <div data-operand="3" class="button">3</div>
             </td>
             <td>
-              <div data-operator="add" class="button button-operator">+</div>
+              <div data-operator="+" class="button button-operator">+</div>
             </td>
           </tr>
           <tr>
             <td colspan="2">
-              <div data-operand="0" class="button">0</div>
+              <div data-operand="0" class="button button-zero">0</div>
             </td>
             <td>
-              <div class="button">.</div>
+              <div data-operand="." class="button">.</div>
             </td>
             <td>
               <div class="button button-equals">=</div>
