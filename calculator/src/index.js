@@ -58,6 +58,10 @@ function operatorButton(e) {
 }
 
 function equalsButton(e) {
+  if (operation.total === 0) {
+    operation.total = operation.current;
+  }
+
   switch (operation.operator) {
     case "+":
       operation.total += operation.current;
@@ -98,6 +102,10 @@ function otherButton(e) {
       operation.current = Number(display.innerText);
       break;
     case e.target.classList.contains("percent"):
+      if (operation.total === 0) {
+        operation.total = operation.current / 100;
+      }
+
       const percent = (operation.current / 100) * operation.total;
 
       switch (operation.operator) {
