@@ -12,7 +12,26 @@ input[type="number"] {
   width: 80px;
 }
 
-.list {
+#history {
+  display: flex;
+}
+
+#history > div {
+  width: 30%;
+}
+
+.progress-bar {
+  width: 60%;
+  height: 20px;
+  background-color: lightgray;
+}
+
+.progress-bar > span {
+  display: inline-block;
+  height: 100%;
+}
+
+#list {
   width: 90%;
   text-align: left;
 }

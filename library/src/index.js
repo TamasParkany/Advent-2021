@@ -8,40 +8,102 @@ const formSubmit = document.getElementById("fsubmit");
 formSubmit.addEventListener("click", handleForm);
 
 let library = [];
+let history = [];
 
-function Book(title, author, cpage, tpages, status) {
+function Book(title, author, cpage, tpages, status, time) {
   this.title = title;
   this.author = author;
   this.cpage = cpage;
   this.tpages = tpages;
   this.status = status;
+  this.time = time;
 }
 
-function addBookToLibrary(title, author, cpage, tpages, status) {
-  const book = new Book(title, author, cpage, tpages, status);
+function addBookToLibrary(title, author, cpage, tpages, status, time) {
+  const book = new Book(title, author, cpage, tpages, status, time);
   library.unshift(book);
 }
 
-if (localStorage.getItem("books") === null) {
+if (localStorage.getItem("blibrary") === null) {
   library = [];
 } else {
-  const booksFromStorage = JSON.parse(localStorage.getItem("books"));
+  const booksFromStorage = JSON.parse(localStorage.getItem("blibrary"));
   library = booksFromStorage;
 }
 
 function handleForm(e) {
   e.preventDefault();
 
+  const creationTime = new Date();
+  creationTime.toJSON();
+
   addBookToLibrary(
     formTitle.value,
     formAuthor.value,
     formCPage.value,
     formTPages.value,
-    formStatus.value
+    formStatus.value,
+    creationTime
   );
 
   document.getElementById("bookForm").reset();
+  showHistory();
   showBooks();
+}
+
+function showHistory() {
+  const updateHistory = document.getElementById("history");
+  updateHistory.innerHTML = "";
+  const recent = [...library].sort((a, b) => {
+    return a.time < b.time ? 1 : a.time > b.time ? -1 : 0;
+  });
+  history = recent.slice(0, 3);
+  history.forEach((book) => {
+    const bookContainer = document.createElement("div");
+    updateHistory.appendChild(bookContainer);
+    //TITLE
+    const bookTitle = document.createElement("p");
+    bookTitle.innerText = book.title;
+    bookContainer.appendChild(bookTitle);
+    //AUTHOR
+    const bookAuthor = document.createElement("p");
+    bookAuthor.innerText = book.author;
+    bookContainer.appendChild(bookAuthor);
+    //PROGRESS BAR
+    const bookProgress = document.createElement("div");
+    bookProgress.setAttribute("class", "progress-bar");
+    const progressFill = document.createElement("span");
+    progressFill.style.width = `${Math.floor(
+      (book.cpage / book.tpages) * 100
+    )}%`;
+    bookProgress.appendChild(progressFill);
+    bookContainer.appendChild(bookProgress);
+    //INFO
+    bookContainer.appendChild(document.createTextNode(`${book.status} `));
+    const currentPage = document.createElement("span");
+    currentPage.innerText = `${book.cpage}`;
+    bookContainer.appendChild(currentPage);
+    bookContainer.appendChild(document.createTextNode(`/${book.tpages}`));
+
+    switch (book.status) {
+      case "Reading":
+        progressFill.style.backgroundColor = "green";
+        currentPage.style.color = "green";
+        break;
+      case "Completed":
+        progressFill.style.backgroundColor = "blue";
+        currentPage.style.color = "blue";
+        break;
+      case "On-hold":
+        progressFill.style.backgroundColor = "yellow";
+        currentPage.style.color = "yellow";
+        break;
+      default:
+        progressFill.style.backgroundColor = "red";
+        currentPage.style.color = "red";
+        break;
+    }
+  });
 }
 
 function showBooks() {
@@ -81,7 +143,7 @@ function showBooks() {
     bookRow.appendChild(bookButtons);
   });
   //SAVE TO LOCAL STORAGE
-  localStorage.setItem("books", JSON.stringify(library));
+  localStorage.setItem("blibrary", JSON.stringify(library));
 }
 
 function handleEdit(e) {
@@ -155,6 +217,14 @@ function handleSave(e) {
         td.innerText = queryInfo.status;
         break;
       case 3:
+        if (
+          queryInfo.cpage !== td.firstChild.value ||
+          queryInfo.tpages !== td.lastChild.value
+        ) {
+          const updatedTime = new Date();
+          updatedTime.toJSON();
+          queryInfo.time = updatedTime;
+        }
         queryInfo.cpage = td.firstChild.value;
         queryInfo.tpages = td.lastChild.value;
         td.innerText = `${queryInfo.cpage} / ${queryInfo.tpages}`;
@@ -173,7 +243,7 @@ function handleSave(e) {
     }
   });
   //SAVE TO LOCAL STORAGE
-  localStorage.setItem("books", JSON.stringify(library));
+  localStorage.setItem("blibrary", JSON.stringify(library));
 }
 
 function handleCancel(e) {
@@ -217,7 +287,7 @@ function handleDelete(e) {
     bookRow[i].id = bookRow[i].rowIndex - 1;
   }
   //SAVE TO LOCAL STORAGE
-  localStorage.setItem("books", JSON.stringify(library));
+  localStorage.setItem("blibrary", JSON.stringify(library));
 }
 
 //DELETE LATER
@@ -230,19 +300,14 @@ logLibrary.addEventListener("click", (e) => {
 document.getElementById("bookForm").appendChild(logLibrary);
 //DELETE LATER
 
+showHistory();
 showBooks();
 
 // const created = 1640342000000;
 // const date = new Date();
+// const dateJSON = date.toJSON();
+// console.log(dateJSON);
 // const current = Math.floor((date.valueOf() - created) / 1000);
 // console.log(`Seconds: ${current}`);
 // console.log(`Minutes: ${Math.floor(current / 60)}`);
 // console.log(`Hours: ${Math.floor(current / 60 / 60)}`);
-
-// const twelveRules = new Book(
-//   "12 Rules",
-//   "Jordan B. Peterson",
-//   "259",
-//   "259",
-//   "Completed"
-// );
