@@ -4,6 +4,47 @@
   box-sizing: border-box;
 }
 
+:root {
+  font-family: Verdana, Arial, sans-serif;
+}
+
+body {
+  background-image: url("../public/mblbg.png");
+  background-position: center top;
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+}
+
+header {
+  display: block;
+  position: relative;
+  width: 1060px;
+  height: 70px;
+  margin: 0 auto;
+}
+
+.logo {
+  position: absolute;
+  top: 21px;
+  background-image: url("../public/mbllogo.png");
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: auto 36px;
+  display: block;
+  width: 240px;
+  height: 36px;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+#bookForm {
+  display: block;
+  position: absolute;
+  top: 18px;
+  right: 5px;
+  color: white;
+}
+
 #pages {
   display: inline-block;
 }
@@ -12,26 +53,149 @@ input[type="number"] {
   width: 80px;
 }
 
+.container {
+  position: relative;
+  background-color: #ffffff;
+  border: #ebebeb 1px solid;
+  width: 1058px;
+  margin-bottom: 0;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: left;
+}
+
 #history {
-  display: flex;
+  display: block;
+  width: 1024px;
+  height: 280px;
+  margin: 0 auto;
+  padding-top: 16px;
 }
 
 #history > div {
-  width: 30%;
+  display: inline-block;
+  width: 33.33%;
+  padding-top: 82px;
+  padding-left: 82px;
+}
+
+.space {
+  width: 1058px;
+  height: 46px;
 }
 
 .progress-bar {
-  width: 60%;
-  height: 20px;
-  background-color: lightgray;
+  background-color: #f6f6f6;
+  border: #f0f0f0 1px solid;
+  border-radius: 2px;
+  padding: 1px;
+  height: 15px;
+  width: 65%;
 }
 
 .progress-bar > span {
   display: inline-block;
   height: 100%;
+  border-radius: 2px;
+  &::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
+}
+
+.table-container {
+  margin: 16px auto 0 auto;
+  width: 1022px;
+  min-height: 600px;
 }
 
 #list {
-  width: 90%;
-  text-align: left;
+  width: 100%;
+  border: #ebebeb 1px solid;
+  border-collapse: collapse;
+
+  tr > th {
+    background: #f6f6f6 url("../public/bar-table-header.png") no-repeat right
+      7px / 1px 22px;
+    display: table-cell;
+    border-bottom: #ebebeb 1px solid;
+    height: 36px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  tbody > tr:nth-child(even) {
+    background-color: #fcfcfc;
+  }
+
+  .thead-title {
+    width: 40%;
+    padding-left: 8px;
+    text-align: left;
+  }
+  .thead-author {
+    width: 20%;
+    padding-left: 8px;
+    text-align: left;
+  }
+  .thead-status {
+    width: 12.5%;
+  }
+  .thead-progress {
+    width: 12.5%;
+  }
+  .thead-edit {
+    width: 10%;
+    background-image: none;
+  }
+
+  tr > td {
+    display: table-cell;
+    padding: 4px 0;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: #ebebeb 1px solid;
+    height: 72px;
+  }
+
+  .tdesc-title {
+    width: 40%;
+    padding-left: 8px;
+    text-align: left;
+  }
+  .tdesc-author {
+    width: 20%;
+    padding-left: 8px;
+    text-align: left;
+  }
+  .tdesc-status {
+    width: 12.5%;
+  }
+  .tdesc-progress {
+    width: 12.5%;
+  }
+  .tdesc-edit {
+    width: 10%;
+  }
+
+  button {
+    border: none;
+    background: none;
+    color: #2e51a2;
+    cursor: pointer;
+  }
+}
+
+.loading-space {
+  margin: 8px;
+  height: 20px;
+  text-align: center;
+}
+
+footer {
+  height: 62px;
+  background-color: #2e51a2;
 }

@@ -87,20 +87,24 @@ function showHistory() {
 
     switch (book.status) {
       case "Reading":
-        progressFill.style.backgroundColor = "green";
-        currentPage.style.color = "green";
+        progressFill.style.backgroundColor = "#2db039";
+        currentPage.style.color = "#2db039";
         break;
       case "Completed":
-        progressFill.style.backgroundColor = "blue";
-        currentPage.style.color = "blue";
+        progressFill.style.backgroundColor = "#26448f";
+        currentPage.style.color = "#26448f";
         break;
       case "On-hold":
-        progressFill.style.backgroundColor = "yellow";
-        currentPage.style.color = "yellow";
+        progressFill.style.backgroundColor = "#f9d457";
+        currentPage.style.color = "#f9d457";
+        break;
+      case "Dropped":
+        progressFill.style.backgroundColor = "#a12f31";
+        currentPage.style.color = "#a12f31";
         break;
       default:
-        progressFill.style.backgroundColor = "red";
-        currentPage.style.color = "red";
+        progressFill.style.backgroundColor = "#c3c3c3";
+        currentPage.style.color = "#c3c3c3";
         break;
     }
   });
@@ -117,28 +121,34 @@ function showBooks() {
     //TITLE
     const bookTitle = document.createElement("td");
     bookTitle.innerText = book.title;
+    bookTitle.setAttribute("class", "tdesc-title");
     bookRow.appendChild(bookTitle);
     //AUTHOR
     const bookAuthor = document.createElement("td");
     bookAuthor.innerText = book.author;
+    bookAuthor.setAttribute("class", "tdesc-author");
     bookRow.appendChild(bookAuthor);
     //STATUS
     const bookStatus = document.createElement("td");
     bookStatus.innerText = book.status;
+    bookStatus.setAttribute("class", "tdesc-status");
     bookRow.appendChild(bookStatus);
     //PROGRESS
     const bookProgress = document.createElement("td");
     bookProgress.innerText = `${book.cpage} / ${book.tpages}`;
+    bookProgress.setAttribute("class", "tdesc-progress");
     bookRow.appendChild(bookProgress);
     //BUTTONS
     const bookButtons = document.createElement("td");
+    bookButtons.setAttribute("class", "tdesc-edit");
     const editButton = document.createElement("button");
     editButton.innerText = "Edit";
     editButton.addEventListener("click", handleEdit);
-    bookButtons.appendChild(editButton);
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
     deleteButton.addEventListener("click", handleDelete);
+    bookButtons.appendChild(editButton);
+    bookButtons.appendChild(document.createTextNode(" · "));
     bookButtons.appendChild(deleteButton);
     bookRow.appendChild(bookButtons);
   });
@@ -193,6 +203,7 @@ function handleEdit(e) {
         cancelButton.addEventListener("click", handleCancel);
         td.innerText = "";
         td.appendChild(saveButton);
+        td.appendChild(document.createTextNode(" · "));
         td.appendChild(cancelButton);
         break;
     }
@@ -238,6 +249,7 @@ function handleSave(e) {
         deleteButton.addEventListener("click", handleDelete);
         td.innerText = "";
         td.appendChild(editButton);
+        td.appendChild(document.createTextNode(" · "));
         td.appendChild(deleteButton);
         break;
     }
@@ -272,6 +284,7 @@ function handleCancel(e) {
         deleteButton.addEventListener("click", handleDelete);
         td.innerText = "";
         td.appendChild(editButton);
+        td.appendChild(document.createTextNode(" · "));
         td.appendChild(deleteButton);
         break;
     }
@@ -289,16 +302,6 @@ function handleDelete(e) {
   //SAVE TO LOCAL STORAGE
   localStorage.setItem("blibrary", JSON.stringify(library));
 }
-
-//DELETE LATER
-const logLibrary = document.createElement("button");
-logLibrary.innerText = "Log Library";
-logLibrary.addEventListener("click", (e) => {
-  e.preventDefault();
-  console.log(library);
-});
-document.getElementById("bookForm").appendChild(logLibrary);
-//DELETE LATER
 
 showHistory();
 showBooks();
