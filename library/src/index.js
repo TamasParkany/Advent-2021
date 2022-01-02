@@ -1,3 +1,6 @@
+const formOpen = document.getElementById("form-open");
+const overlay = document.getElementById("overlay");
+const formClose = document.getElementById("form-close");
 const formTitle = document.getElementById("title");
 const formAuthor = document.getElementById("author");
 const formCPage = document.getElementById("cpage");
@@ -5,6 +8,9 @@ const formTPages = document.getElementById("tpages");
 const formStatus = document.getElementById("bstatus");
 const formSubmit = document.getElementById("fsubmit");
 
+formOpen.addEventListener("click", overlayOn);
+overlay.addEventListener("click", overlayOff);
+formClose.addEventListener("click", overlayOff);
 formSubmit.addEventListener("click", handleForm);
 
 let library = [];
@@ -31,22 +37,40 @@ if (localStorage.getItem("blibrary") === null) {
   library = booksFromStorage;
 }
 
+function overlayOn() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function overlayOff(e) {
+  if (e.target.id === "overlay" || e.target.id === "form-close") {
+    document.getElementById("overlay").style.display = "none";
+  }
+}
+
 function handleForm(e) {
   e.preventDefault();
 
   const creationTime = new Date();
   creationTime.toJSON();
 
-  addBookToLibrary(
-    formTitle.value,
-    formAuthor.value,
-    formCPage.value,
-    formTPages.value,
-    formStatus.value,
-    creationTime
-  );
+  if (
+    formTitle.value.trim() !== "" &&
+    formAuthor.value.trim() !== "" &&
+    !library.some((book) => book.title === formTitle.value.trim())
+  ) {
+    addBookToLibrary(
+      formTitle.value,
+      formAuthor.value,
+      formCPage.value,
+      formTPages.value,
+      formStatus.value,
+      creationTime
+    );
+  } else {
+    alert("Fill out the form correctly and try again.");
+  }
 
-  document.getElementById("bookForm").reset();
+  document.getElementById("book-form").reset();
   showHistory();
   showBooks();
 }
