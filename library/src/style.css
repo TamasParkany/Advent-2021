@@ -115,7 +115,7 @@ body {
   z-index: 1000;
 }
 
-#form-container {
+#overlay-container {
   display: block;
   position: absolute;
   top: 50%;
@@ -125,12 +125,12 @@ body {
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 15px rgba(102, 102, 102, 0.2);
           box-shadow: 0px 0px 15px rgba(102, 102, 102, 0.2);
-  width: 490px;
-  height: 590px;
+  width: 400px;
+  height: 450px;
   z-index: 1100;
 }
 
-#form-close {
+#overlay-close {
   background: url("../public/close.png") top left no-repeat;
   cursor: pointer;
   height: 32px;
@@ -142,15 +142,18 @@ body {
 }
 
 #book-form {
+  display: none;
   color: #2e51a2;
   width: 50%;
   height: 100%;
   margin: 0 auto;
-  padding-top: 90px;
+  padding-top: 40px;
 }
 
 #book-form label {
   line-height: 1.5;
+  font-size: 1.2em;
+  font-weight: 700;
 }
 
 #book-form input[type="text"] {
@@ -173,8 +176,25 @@ body {
   -moz-appearance: textfield;
 }
 
+#book-form input[type="number"]::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+#book-form input[type="number"]:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
+#book-form input[type="number"]::-ms-input-placeholder {
+  opacity: 0.5;
+}
+
+#book-form input[type="number"]::placeholder {
+  opacity: 0.5;
+}
+
 #book-form #pages {
   display: block;
+  padding-bottom: 20px;
 }
 
 #book-form select {
@@ -197,6 +217,85 @@ body {
   padding: 4px;
   text-align: center;
   text-decoration: none;
+  font-size: 1.2em;
+}
+
+.form-section {
+  padding-bottom: 20px;
+}
+
+#book-delete {
+  display: none;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  padding-top: 150px;
+}
+
+#book-delete > p {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+#book-delete .book-delete-buttons {
+  padding-top: 20px;
+}
+
+#book-delete #delete-yes {
+  background-color: #a12f31;
+  border: #fff 0 solid;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+  width: 20%;
+  font-size: 1.5em;
+}
+
+#book-delete #delete-yes:hover {
+  background-color: #7b2425;
+}
+
+#book-delete #delete-no {
+  background-color: #c3c3c3;
+  border: #fff 0 solid;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+  width: 20%;
+  font-size: 1.5em;
+}
+
+#book-delete #delete-no:hover {
+  background-color: #a8a8a8;
+}
+
+#book-export {
+  display: none;
+  text-align: center;
+  padding-top: 150px;
+}
+
+#book-export input[type="button"] {
+  background-color: #4f74c8;
+  border: #fff 0 solid;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.2em;
 }
 
 header {
@@ -287,6 +386,7 @@ header {
 
 #list {
   width: 100%;
+  font-size: 14px;
   border: #ebebeb 1px solid;
   border-collapse: collapse;
 }
@@ -302,6 +402,14 @@ header {
 
 #list tbody > tr:nth-child(even) {
   background-color: #fcfcfc;
+}
+
+#list .thead-indicator {
+  width: 1%;
+}
+
+#list .thead-index {
+  width: 3%;
 }
 
 #list .thead-title {
@@ -336,6 +444,14 @@ header {
   vertical-align: middle;
   border-bottom: #ebebeb 1px solid;
   height: 72px;
+}
+
+#list .tdesc-indicator {
+  width: 1%;
+}
+
+#list .tdesc-index {
+  width: 3%;
 }
 
 #list .tdesc-title {

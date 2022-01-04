@@ -1,6 +1,7 @@
 const formOpen = document.getElementById("form-open");
+const exportLibrary = document.getElementById("export-library");
 const overlay = document.getElementById("overlay");
-const formClose = document.getElementById("form-close");
+const overlayClose = document.getElementById("overlay-close");
 const formTitle = document.getElementById("title");
 const formAuthor = document.getElementById("author");
 const formCPage = document.getElementById("cpage");
@@ -8,13 +9,15 @@ const formTPages = document.getElementById("tpages");
 const formStatus = document.getElementById("bstatus");
 const formSubmit = document.getElementById("fsubmit");
 
-formOpen.addEventListener("click", overlayOn);
+formOpen.addEventListener("click", overlayAdd);
+exportLibrary.addEventListener("click", overlayExport);
 overlay.addEventListener("click", overlayOff);
-formClose.addEventListener("click", overlayOff);
+overlayClose.addEventListener("click", overlayOff);
 formSubmit.addEventListener("click", handleForm);
 
 let library = [];
 let history = [];
+let overlayContent = "";
 
 function Book(title, author, cpage, tpages, status, time) {
   this.title = title;
@@ -37,13 +40,97 @@ if (localStorage.getItem("blibrary") === null) {
   library = booksFromStorage;
 }
 
-function overlayOn() {
+function overlayAdd() {
+  overlayContent = "add";
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("book-form").style.display = "block";
+  formCPage.addEventListener("change", cPageCheck);
+  formTPages.addEventListener("change", tPagesCheck);
+  formStatus.addEventListener("change", statusCheck);
+}
+
+function cPageCheck(e) {
+  const number = e.target.parentNode.parentNode.children[3].children;
+  const status = e.target.parentNode.parentNode.children[4].lastElementChild;
+  if (Number(e.target.value) < 0) {
+    e.target.value = 0;
+  }
+  if (Number(number[0].value) > Number(number[1].value)) {
+    number[0].value = number[1].value;
+  }
+  if (Number(number[0].value) === Number(number[1].value)) {
+    status.value = "Completed";
+  }
+}
+
+function tPagesCheck(e) {
+  const number = e.target.parentNode.parentNode.children[3].children;
+  const status = e.target.parentNode.parentNode.children[4].lastElementChild;
+  if (Number(e.target.value) < 0) {
+    e.target.value = 0;
+  }
+  if (Number(number[0].value) > Number(number[1].value)) {
+    number[0].value = number[1].value;
+    status.value = "Completed";
+  }
+}
+
+function statusCheck(e) {
+  const status = e.target.parentNode.parentNode.children[4].lastElementChild;
+  const number = e.target.parentNode.parentNode.children[3].children;
+  if (status.value === "Completed") {
+    number[0].value = number[1].value;
+  }
+}
+
+function overlayExport() {
+  overlayContent = "export";
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("book-export").style.display = "block";
+  const textBox = document.getElementById("text-val");
+  textBox.value = localStorage.getItem("blibrary");
+  document.getElementById("dwn-btn").addEventListener("click", () => {
+    const text = textBox.value;
+    const filename = "my-book-list-data.txt";
+    download(filename, text);
+  });
+}
+
+function download(filename, text) {
+  const element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+  element.style.display = "none";
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }
 
 function overlayOff(e) {
-  if (e.target.id === "overlay" || e.target.id === "form-close") {
+  if (e.target.id === "overlay" || e.target.id === "overlay-close") {
     document.getElementById("overlay").style.display = "none";
+    switch (overlayContent) {
+      case "add":
+        document.getElementById("book-form").reset();
+        document.getElementById("book-form").style.display = "none";
+        formCPage.removeEventListener("change", cPageCheck);
+        formTPages.removeEventListener("change", tPagesCheck);
+        formStatus.removeEventListener("change", statusCheck);
+        break;
+      case "delete":
+        const bookDelete = document.getElementById("book-delete");
+        bookDelete.style.display = "none";
+        bookDelete.replaceWith(bookDelete.cloneNode(true));
+        break;
+      default:
+        const bookExport = document.getElementById("book-export");
+        bookExport.style.display = "none";
+        bookExport.replaceWith(bookExport.cloneNode(true));
+        break;
+    }
   }
 }
 
@@ -71,6 +158,8 @@ function handleForm(e) {
   }
 
   document.getElementById("book-form").reset();
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("book-form").style.display = "none";
   showHistory();
   showBooks();
 }
@@ -142,6 +231,33 @@ function showBooks() {
     const bookRow = document.createElement("tr");
     bookRow.setAttribute("id", library.indexOf(book));
     bookList.appendChild(bookRow);
+    //INDICATOR
+    const bookIndicator = document.createElement("td");
+    bookIndicator.setAttribute("class", "tdesc-indicator");
+    bookRow.appendChild(bookIndicator);
+
+    switch (book.status) {
+      case "Reading":
+        bookIndicator.style.backgroundColor = "#2db039";
+        break;
+      case "Completed":
+        bookIndicator.style.backgroundColor = "#26448f";
+        break;
+      case "On-hold":
+        bookIndicator.style.backgroundColor = "#f9d457";
+        break;
+      case "Dropped":
+        bookIndicator.style.backgroundColor = "#a12f31";
+        break;
+      default:
+        bookIndicator.style.backgroundColor = "#c3c3c3";
+        break;
+    }
+    //INDEX
+    // const bookIndex = document.createElement("td");
+    // bookIndex.innerText = Number(bookRow.id) + 1;
+    // bookIndicator.setAttribute("class", "tdesc-index");
+    // bookRow.appendChild(bookIndex);
     //TITLE
     const bookTitle = document.createElement("td");
     bookTitle.innerText = book.title;
@@ -185,14 +301,16 @@ function handleEdit(e) {
   target.forEach((td) => {
     switch (td.cellIndex) {
       case 0:
+        break;
       case 1:
+      case 2:
         const editText = document.createElement("input");
         editText.setAttribute("type", "text");
         editText.value = td.innerText;
         td.innerText = "";
         td.appendChild(editText);
         break;
-      case 2:
+      case 3:
         const editSelect = document.createElement("select");
         ["Reading", "Completed", "On-hold", "Dropped"].forEach((status) => {
           const selectOption = document.createElement("option");
@@ -205,7 +323,7 @@ function handleEdit(e) {
         td.innerText = "";
         td.appendChild(editSelect);
         break;
-      case 3:
+      case 4:
         const progress = td.innerText.split("/");
         const currentPage = document.createElement("input");
         currentPage.setAttribute("type", "number");
@@ -240,18 +358,37 @@ function handleSave(e) {
   target.forEach((td) => {
     switch (td.cellIndex) {
       case 0:
+        switch (td.parentNode.children[3].firstChild.value) {
+          case "Reading":
+            td.style.backgroundColor = "#2db039";
+            break;
+          case "Completed":
+            td.style.backgroundColor = "#26448f";
+            break;
+          case "On-hold":
+            td.style.backgroundColor = "#f9d457";
+            break;
+          case "Dropped":
+            td.style.backgroundColor = "#a12f31";
+            break;
+          default:
+            td.style.backgroundColor = "#c3c3c3";
+            break;
+        }
+        break;
+      case 1:
         queryInfo.title = td.firstChild.value;
         td.innerText = queryInfo.title;
         break;
-      case 1:
+      case 2:
         queryInfo.author = td.firstChild.value;
         td.innerText = queryInfo.author;
         break;
-      case 2:
+      case 3:
         queryInfo.status = td.firstChild.value;
         td.innerText = queryInfo.status;
         break;
-      case 3:
+      case 4:
         if (
           queryInfo.cpage !== td.firstChild.value ||
           queryInfo.tpages !== td.lastChild.value
@@ -288,15 +425,17 @@ function handleCancel(e) {
   target.forEach((td) => {
     switch (td.cellIndex) {
       case 0:
-        td.innerText = queryInfo.title;
         break;
       case 1:
-        td.innerText = queryInfo.author;
+        td.innerText = queryInfo.title;
         break;
       case 2:
-        td.innerText = queryInfo.status;
+        td.innerText = queryInfo.author;
         break;
       case 3:
+        td.innerText = queryInfo.status;
+        break;
+      case 4:
         td.innerText = `${queryInfo.cpage} / ${queryInfo.tpages}`;
         break;
       default:
@@ -316,13 +455,40 @@ function handleCancel(e) {
 }
 
 function handleDelete(e) {
-  const targetID = e.target.parentNode.parentNode.id;
-  library.splice(targetID, 1);
-  e.target.parentNode.parentNode.remove();
+  const target = e.target.parentNode.parentNode;
+  overlayContent = "delete";
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("book-delete").style.display = "block";
+  document
+    .getElementById("delete-yes")
+    .addEventListener("click", () => executeDelete(target));
+  document.getElementById("delete-no").addEventListener("click", () => {
+    const bookDelete = document.getElementById("book-delete");
+    document.getElementById("overlay").style.display = "none";
+    bookDelete.style.display = "none";
+    bookDelete.replaceWith(bookDelete.cloneNode(true));
+  });
+  // library.splice(target.id, 1);
+  // target.remove();
+  // const bookRow = document.getElementById("books").childNodes;
+  // for (let i = target.id; i < library.length; i++) {
+  //   bookRow[i].id = bookRow[i].rowIndex - 1;
+  // }
+  // //SAVE TO LOCAL STORAGE
+  // localStorage.setItem("blibrary", JSON.stringify(library));
+}
+
+function executeDelete(target) {
+  library.splice(target.id, 1);
+  target.remove();
   const bookRow = document.getElementById("books").childNodes;
-  for (let i = targetID; i < library.length; i++) {
+  for (let i = target.id; i < library.length; i++) {
     bookRow[i].id = bookRow[i].rowIndex - 1;
   }
+  const bookDelete = document.getElementById("book-delete");
+  document.getElementById("overlay").style.display = "none";
+  bookDelete.style.display = "none";
+  bookDelete.replaceWith(bookDelete.cloneNode(true));
   //SAVE TO LOCAL STORAGE
   localStorage.setItem("blibrary", JSON.stringify(library));
 }
