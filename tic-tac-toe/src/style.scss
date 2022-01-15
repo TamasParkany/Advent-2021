@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  user-select: none;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#playing-field {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 600px;
+  height: 600px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.field {
+  border: 1px solid black;
+}
+
+.X {
+  background: url("../public/jack-x-lantern.png") no-repeat;
+  background-size: contain;
+}
+
+.O {
+  background: url("../public/jack-o-lantern.png") no-repeat;
+  background-size: contain;
+}
